@@ -2,9 +2,14 @@ mod controllers {
     pub(crate) mod json_body_handler_demo;
 }
 
+mod db {
+    pub(crate) mod mongodb_connection;
+}
+
 use actix_web::{get, post, web, App, HttpResponse, HttpServer, Responder};
 
 use controllers::json_body_handler_demo::index_user;
+use db::mongodb_connection::db_demo;
 
 #[get("/")]
 async fn hello() -> impl Responder {
@@ -20,8 +25,13 @@ async fn manual_hello() -> impl Responder {
     HttpResponse::Ok().body("Hey there!")
 }
 
+
+
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
+    if let Err(err) = db_demo().await {
+        eprintln!("Error: {}", err);
+    }
     HttpServer::new(|| {
         App::new()
             .service(hello)
