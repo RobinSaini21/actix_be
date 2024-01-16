@@ -1,8 +1,10 @@
 mod controllers {
-    mod json_body_handler_demo;
+    pub(crate) mod json_body_handler_demo;
 }
 
 use actix_web::{get, post, web, App, HttpResponse, HttpServer, Responder};
+
+use controllers::json_body_handler_demo::index_user;
 
 #[get("/")]
 async fn hello() -> impl Responder {
@@ -25,6 +27,7 @@ async fn main() -> std::io::Result<()> {
             .service(hello)
             .service(echo)
             .route("/hey", web::get().to(manual_hello))
+            .route("/add-user", web::post().to(index_user))
     })
     .bind(("127.0.0.1", 8080))?
     .run()

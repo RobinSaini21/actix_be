@@ -7,7 +7,7 @@ pub struct Info {
 }
 
 /// extract `Info` using serde
-pub async fn index(info: web::Json<Info>) -> Result<String> {
+pub async fn index_user(info: web::Json<Info>) -> Result<String> {
     Ok(format!("Welcome {}!", info.username))
 }
 
