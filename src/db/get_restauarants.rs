@@ -1,13 +1,10 @@
-use std::borrow::Borrow;
-
-use actix_web::{web, App, HttpServer, Responder, HttpResponse};
-use mongodb::{Client, options::ClientOptions ,  Collection, bson::doc};
+use actix_web::HttpResponse;
+use mongodb::{Client ,  Collection, bson::doc};
 use serde::{Serialize, Deserialize};
-use tokio;
 use mongodb::error::Error as MongoError;
 
 // don't forget this!
-use futures::stream::{ StreamExt , TryStreamExt , TryStream };
+use futures::stream::TryStreamExt;
 
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -45,7 +42,7 @@ struct Restaurant {
 // }
 
 
-pub async fn db_demo() -> Result<Vec<Restaurant>, MongoError> {
+async fn db_demo() -> Result<Vec<Restaurant>, MongoError> {
     let mut res: Vec<Restaurant> = Vec::new();
     let uri = "mongodb+srv://robinsaini2126:MLcB98hSZmTIQTWS@cluster0.x83bzir.mongodb.net/?retryWrites=true&w=majority";
     let client = Client::with_uri_str(uri).await?;
@@ -61,6 +58,8 @@ pub async fn db_demo() -> Result<Vec<Restaurant>, MongoError> {
     }
     Ok(res)
 }
+
+
 pub async fn get_restauarants() -> HttpResponse {
     let user_detail = db_demo().await;
     match user_detail {
