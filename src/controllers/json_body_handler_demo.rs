@@ -1,6 +1,7 @@
 use actix_web::{web, App, HttpServer, Result};
 use serde::Deserialize;
 
+
 #[derive(Deserialize)]
 pub struct Info {
     username: String,

@@ -1,5 +1,6 @@
 mod controllers {
     pub(crate) mod json_body_handler_demo;
+    pub(crate) mod resturant_controller;
 }
 
 mod db {
